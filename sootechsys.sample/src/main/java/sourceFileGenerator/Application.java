@@ -184,8 +184,8 @@ public class Application {
 		//
 		Map<String,Object> map = new Gson().fromJson(new FileReader(path.resolve(filename).toFile()), Map.class);
 		
-		map.replace("korBizName", paramMap.get("businessNm"));
-		map.replace("engBizName", paramMap.get("businessNm"));
+		map.put("korBizName", paramMap.get("businessNm"));
+		map.put("engBizName", paramMap.get("businessNm"));
 		List<String> label = new ArrayList();
 		List<String> value = new ArrayList();
 		label.add((String) paramMap.get("label0"));

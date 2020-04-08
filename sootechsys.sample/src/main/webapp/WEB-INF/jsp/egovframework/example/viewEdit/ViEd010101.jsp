@@ -92,7 +92,7 @@
 
 
 		var tableCount = $(".table").length
-		var vsInputSource = "<input type=\"text\" class=\"text\" name=\"label"+tableCount+"\"></input><input type=\"text\" class=\"text\" name=\"value"+(tableCount+1)+"\"></input><br>";
+		var vsInputSource = "<input type=\"text\" class=\"text\" name=\"label"+tableCount+"\"></input><input type=\"text\" class=\"text\" name=\"value"+tableCount+"\"></input><br>";
 
 
 
