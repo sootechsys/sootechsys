@@ -29,28 +29,27 @@ import freemarker.template.TemplateNotFoundException;
 public class FileGenerator {
 
 	@SuppressWarnings("unchecked")
-	public void generate(Map<String,Object> configMap, Configuration cfg, Map<String,Object> metaMap) throws TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException {
+	public void generate(Configuration cfg, Map<String,Object> metaMap) throws TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException {
 		//
-		List<String> targets = (List<String>) configMap.get("targets");
+		List<String> targets = (List<String>) metaMap.get("targets");
 		
 		//
 		if(Utils.contains(targets, "controller")) {
-			genController(configMap, cfg, metaMap);
+			genController(cfg, metaMap);
 		}
 		
 		//
 		if(Utils.contains(targets, "service")) {
-			genService(configMap, cfg, metaMap);
+			genService(cfg, metaMap);
 		}
 		
 		//TODO serviceimpl
 		
 		//vo
 		if(Utils.contains(targets, "vo")) {
-			System.out.println("configMap=====>" + configMap);
 			System.out.println("cfg=====>" + cfg);
 			System.out.println("metaMap=====>" + metaMap);
-			genVo(configMap, cfg, metaMap);
+			genVo(cfg, metaMap);
 		}
 		
 		//TODO dao
@@ -59,10 +58,10 @@ public class FileGenerator {
 		
 		//TODO jsp
 		if(Utils.contains(targets, "jsp")) {
-			genListJsp(configMap, cfg, metaMap);
-			genRegistFormJsp(configMap, cfg, metaMap);
-			genUpdtFormJsp(configMap, cfg, metaMap);
-			genDetailJsp(configMap, cfg, metaMap);
+			genListJsp(cfg, metaMap);
+			genRegistFormJsp(cfg, metaMap);
+			genUpdtFormJsp(cfg, metaMap);
+			genDetailJsp(cfg, metaMap);
 		}
 		//TODO js
 	}
@@ -80,19 +79,19 @@ public class FileGenerator {
 	 * @throws IOException
 	 * @throws TemplateException
 	 */
-	private void genListJsp(Map<String, Object> configMap, Configuration cfg, Map<String, Object> metaMap) throws TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException {
+	private void genListJsp(Configuration cfg, Map<String, Object> metaMap) throws TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException {
 		
 		//템플릿
 		Template temp = cfg.getTemplate("listJsp.ftl");
 		
 		//파일 생성 경로
-		Path path = Paths.get(configMap.get("outputPath").toString(), metaMap.get("emptyString").toString(), "jsp");
+		Path path = Paths.get(metaMap.get("outputPath").toString(), metaMap.get("businessNm").toString(), "jsp");
 		
 		//파일명
-		String filename = metaMap.get("upperCaseCamelString") + "List.jsp";
+		String filename = metaMap.get("businessNm") + "List.jsp";
 		
 		//
-		gen(configMap, cfg, metaMap, temp, path, filename);
+		gen(cfg, metaMap, temp, path, filename);
 	}
 	
 	/**
@@ -106,19 +105,19 @@ public class FileGenerator {
 	 * @throws IOException
 	 * @throws TemplateException
 	 */
-	private void genRegistFormJsp(Map<String, Object> configMap, Configuration cfg, Map<String, Object> metaMap) throws TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException {
+	private void genRegistFormJsp(Configuration cfg, Map<String, Object> metaMap) throws TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException {
 		
 		//템플릿
 		Template temp = cfg.getTemplate("registFormJsp.ftl");
 		
 		//파일 생성 경로
-		Path path = Paths.get(configMap.get("outputPath").toString(), metaMap.get("emptyString").toString(), "jsp");
+		Path path = Paths.get(metaMap.get("outputPath").toString(), metaMap.get("businessNm").toString(), "jsp");
 		
 		//파일명
-		String filename = metaMap.get("upperCaseCamelString") + "RegistForm.jsp";
+		String filename = metaMap.get("businessNm") + "RegistForm.jsp";
 		
 		//
-		gen(configMap, cfg, metaMap, temp, path, filename);
+		gen(cfg, metaMap, temp, path, filename);
 	}
 	
 	/**
@@ -132,19 +131,19 @@ public class FileGenerator {
 	 * @throws IOException
 	 * @throws TemplateException
 	 */
-	private void genUpdtFormJsp(Map<String, Object> configMap, Configuration cfg, Map<String, Object> metaMap) throws TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException {
+	private void genUpdtFormJsp(Configuration cfg, Map<String, Object> metaMap) throws TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException {
 		
 		//템플릿
 		Template temp = cfg.getTemplate("updtFormJsp.ftl");
 		
 		//파일 생성 경로
-		Path path = Paths.get(configMap.get("outputPath").toString(), metaMap.get("emptyString").toString(), "jsp");
+		Path path = Paths.get(metaMap.get("outputPath").toString(), metaMap.get("businessNm").toString(), "jsp");
 		
 		//파일명
-		String filename = metaMap.get("upperCaseCamelString") + "UpdtForm.jsp";
+		String filename = metaMap.get("businessNm") + "UpdtForm.jsp";
 		
 		//
-		gen(configMap, cfg, metaMap, temp, path, filename);
+		gen(cfg, metaMap, temp, path, filename);
 	}
 	
 	/**
@@ -158,19 +157,19 @@ public class FileGenerator {
 	 * @throws IOException
 	 * @throws TemplateException
 	 */
-	private void genDetailJsp(Map<String, Object> configMap, Configuration cfg, Map<String, Object> metaMap) throws TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException {
+	private void genDetailJsp(Configuration cfg, Map<String, Object> metaMap) throws TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException {
 		
 		//템플릿
-		Template temp = cfg.getTemplate("updtFormJsp.ftl");
+		Template temp = cfg.getTemplate("detailJsp.ftl");
 		
 		//파일 생성 경로
-		Path path = Paths.get(configMap.get("outputPath").toString(), metaMap.get("emptyString").toString(), "jsp");
+		Path path = Paths.get(metaMap.get("outputPath").toString(), metaMap.get("businessNm").toString(), "jsp");
 		
 		//파일명
-		String filename = metaMap.get("upperCaseCamelString") + "Detail.jsp";
+		String filename = metaMap.get("businessNm") + "Detail.jsp";
 		
 		//
-		gen(configMap, cfg, metaMap, temp, path, filename);
+		gen(cfg, metaMap, temp, path, filename);
 	}
 
 
@@ -186,14 +185,14 @@ public class FileGenerator {
 	 * @throws TemplateException
 	 * @throws IOException
 	 */
-	private void gen(Map<String,Object> configMap, Configuration cfg, Map<String,Object> dataMap, Template temp, Path path, String filename) throws TemplateException, IOException {
+	private void gen(Configuration cfg, Map<String,Object> dataMap, Template temp, Path path, String filename) throws TemplateException, IOException {
 		//경로 미존재시 생성
 		if(!path.toFile().exists()) {
 			path.toFile().mkdirs();
 		}
 
 		//
-		boolean b = (boolean) configMap.get("overwrite");
+		boolean b = (boolean) dataMap.get("overwrite");
 		if(!b) {
 			Utils.backupFileIfExists(path, filename);
 		}
@@ -228,19 +227,19 @@ public class FileGenerator {
 	 * @throws IOException
 	 * @throws TemplateException
 	 */
-	private void genController(Map<String, Object> configMap, Configuration cfg,	Map<String, Object> dataMap) throws TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException {
+	private void genController(Configuration cfg,	Map<String, Object> dataMap) throws TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException {
 
 		//템플릿
 		Template temp = cfg.getTemplate("controller.ftl");
 		
 		//파일 생성 경로
-		Path path = Paths.get(configMap.get("outputPath").toString(), dataMap.get("emptyString").toString(), "web");
+		Path path = Paths.get(dataMap.get("outputPath").toString(), dataMap.get("businessNm").toString(), "web");
 		
 		//파일명
-		String filename = dataMap.get("upperCaseCamelString") + "Controller.java";
+		String filename = dataMap.get("businessNm") + "Controller.java";
 		
 		//
-		gen(configMap, cfg, dataMap, temp, path, filename);
+		gen(cfg, dataMap, temp, path, filename);
 	}
 
 	
@@ -255,19 +254,19 @@ public class FileGenerator {
 	 * @throws IOException
 	 * @throws TemplateException
 	 */
-	private void genService(Map<String, Object> configMap, Configuration cfg,	Map<String, Object> dataMap) throws TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException {
+	private void genService(Configuration cfg,	Map<String, Object> dataMap) throws TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException {
 		
 		//템플릿
 		Template temp = cfg.getTemplate("service.ftl");
 		
 		//파일 생성 경로
-		Path path = Paths.get(configMap.get("outputPath").toString(), dataMap.get("emptyString").toString(), "service");
+		Path path = Paths.get(dataMap.get("outputPath").toString(), dataMap.get("businessNm").toString(), "service");
 		
 		//파일명
-		String filename = dataMap.get("upperCaseCamelString") + "Service.java";
+		String filename = dataMap.get("businessNm") + "Service.java";
 		
 		//
-		gen(configMap, cfg, dataMap, temp, path, filename);
+		gen(cfg, dataMap, temp, path, filename);
 		
 	}
 	
@@ -286,18 +285,18 @@ public class FileGenerator {
 	 * @throws IOException
 	 * @throws TemplateException
 	 */
-	private void genVo(Map<String, Object> configMap, Configuration cfg, Map<String, Object> metaMap) throws TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException {
+	private void genVo(Configuration cfg, Map<String, Object> metaMap) throws TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException {
 		//템플릿
 		Template temp = cfg.getTemplate("vo.ftl");
 
 		//파일 생성 경로
-		Path path = Paths.get(configMap.get("outputPath").toString(), metaMap.get("emptyString").toString(), "vo");
+		Path path = Paths.get(metaMap.get("outputPath").toString(), metaMap.get("businessNm").toString(), "vo");
 
 		//파일명
-		String filename = metaMap.get("upperCaseCamelString") + "Vo.java";
+		String filename = metaMap.get("businessNm") + "Vo.java";
 
 		//
-		gen(configMap, cfg, metaMap, temp, path, filename);
+		gen(cfg, metaMap, temp, path, filename);
 		
 	}
 }
