@@ -12,10 +12,13 @@
 	<body>
 	
 		<#list datas as item>
-			
-			<div>
+			<div style=${item.drag1}>
 				<!-- ${item.kor} -->
-				${item.lowerCaseCamelString}
+				${item.businessNm}
+			</div>
+			<div style=${item.drag2}>
+				<!-- ${item.kor} -->
+				${item.businessNm}
 			</div>
 		</#list>
 	
